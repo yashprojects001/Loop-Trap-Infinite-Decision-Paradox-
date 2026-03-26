@@ -1,0 +1,129 @@
+```html id="r9x2pl"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Loop Trap</title>
+
+<style>
+body {
+    margin: 0;
+    background: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    overflow: hidden;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+h1 {
+    color: #ff4d4d;
+}
+
+button {
+    padding: 12px 25px;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.choice1 { background: #00ffc3; }
+.choice2 { background: #ff4d4d; }
+
+#message {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #ccc;
+}
+
+.glitch {
+    animation: glitch 0.2s infinite;
+}
+
+@keyframes glitch {
+    0% { transform: translate(-50%, -50%) skew(0deg); }
+    25% { transform: translate(-48%, -52%) skew(2deg); }
+    50% { transform: translate(-52%, -48%) skew(-2deg); }
+    75% { transform: translate(-49%, -51%) skew(1deg); }
+    100% { transform: translate(-50%, -50%) skew(0deg); }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container" id="game">
+    <h1>🔄 Loop Trap</h1>
+    <p id="question">You see two doors. Which one do you choose?</p>
+
+    <button class="choice1" onclick="choose(1)">Door A</button>
+    <button class="choice2" onclick="choose(2)">Door B</button>
+
+    <div id="message"></div>
+</div>
+
+<script>
+
+let step = 0;
+
+function choose(option) {
+    let msg = document.getElementById("message");
+    let question = document.getElementById("question");
+
+    step++;
+
+    if (step === 1) {
+        question.innerText = "You enter... but see the same two doors again.";
+        msg.innerText = "Strange... haven't you been here before?";
+    }
+    else if (step === 2) {
+        question.innerText = "You try again. Still the same.";
+        msg.innerText = "Are you really choosing... or repeating?";
+    }
+    else if (step === 3) {
+        question.innerText = "The doors look identical now.";
+        msg.innerText = "Maybe the choice never mattered.";
+        document.getElementById("game").classList.add("glitch");
+    }
+    else if (step === 4) {
+        question.innerText = "You feel trapped.";
+        msg.innerText = "Or maybe... you always were.";
+    }
+    else if (step === 5) {
+        question.innerText = "There is no escape.";
+        msg.innerText = "Unless you find what is hidden...";
+        revealEscape();
+    }
+}
+
+function revealEscape() {
+    let hidden = document.createElement("button");
+    hidden.innerText = "???";
+    hidden.style.position = "absolute";
+    hidden.style.bottom = "20px";
+    hidden.style.right = "20px";
+    hidden.style.background = "black";
+    hidden.style.color = "black"; // invisible
+
+    hidden.onclick = () => {
+        document.body.innerHTML = "<h1 style='margin-top:20%'>🧠 You escaped the loop.</h1>";
+    };
+
+    document.body.appendChild(hidden);
+}
+
+</script>
+
+</body>
+</html>
+```
